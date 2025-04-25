@@ -2,7 +2,14 @@
 
 ## How to run
 ```bash
-python main.py
+python main.py --job_path <path-to-txt-file>
+```
+
+### Example of a job text file
+```text
+(9,4,2)
+(9,4,3)
+(9,4,4)
 ```
 
 ## Directory Structure
