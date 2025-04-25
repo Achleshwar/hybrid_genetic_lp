@@ -1,4 +1,5 @@
 import numpy as np
+import argparse
 from tqdm import tqdm
 import time
 from scipy.optimize import differential_evolution
@@ -189,17 +190,27 @@ if __name__ == "__main__":
     # print(best_P)
     # print("Best m-height achieved:", best_mheight)
 
-    target_parameters = [
-        (9, 4, 2), (9, 4, 3), (9, 4, 4), (9, 4, 5),
-        (9, 5, 2), (9, 5, 3), (9, 5, 4),
-        (9, 6, 2), (9, 6, 3),
-        (10, 4, 2), (10, 4, 3), (10, 4, 4), (10, 4, 5), (10, 4, 6),
-        (10, 5, 2), (10, 5, 3), (10, 5, 4), (10, 5, 5),
-        (10, 6, 2), (10, 6, 3), (10, 6, 4),
-    ]
+    # target_parameters = [
+    #     (9, 4, 2), (9, 4, 3), (9, 4, 4), (9, 4, 5),
+    #     (9, 5, 2), (9, 5, 3), (9, 5, 4),
+    #     (9, 6, 2), (9, 6, 3),
+    #     (10, 4, 2), (10, 4, 3), (10, 4, 4), (10, 4, 5), (10, 4, 6),
+    #     (10, 5, 2), (10, 5, 3), (10, 5, 4), (10, 5, 5),
+    #     (10, 6, 2), (10, 6, 3), (10, 6, 4),
+    # ]
+
+    parser = argparse.ArgumentParser(description='Run hybrid genetic algorithm')
+    parser.add_argument('--job_path', type=str)
+
+    args=parser.parse_args()
+    job_path = args.job_path
+    with open(job_path, 'r') as f:
+        lines = f.readlines()
+        target_parameters = [line.strip() for line in lines]
 
     for target_code in target_parameters:
-        n, k, m = target_code
+        # n, k, m = target_code
+        n, k, m = map(int, target_code.strip('()').split(','))
         code = f"{n}_{k}_{m}"
         p1_results_json = './p1_results.json'
         best_P_candidates = load_candidates(p1_results_json, target_code=target_code)
