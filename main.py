@@ -78,6 +78,7 @@ def genetic_algorithm(k, n, m,
     # Initial evaluation using LP
     lp_fitness = [compute_hm(construct_G(P), m) for P in population]
     best_lp_fitness = min(lp_fitness)
+    best_lp_P = population[np.argmin(lp_fitness)]
 
     if verbose:
         print("Initial best m-height:", best_fitness)
